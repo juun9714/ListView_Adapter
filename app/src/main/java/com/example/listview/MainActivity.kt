@@ -2,11 +2,22 @@ package com.example.listview
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import android.widget.Toast
 import com.example.listview.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
+    var UserList = arrayListOf<User>(
+        //val profile : Int, val name : String, val age : String, val greet : String 모델의 User를 정의한 순서대로 데이터를 넣어주기
+        User(R.drawable.profile,"June","25","Hell this world"),
+        User(R.drawable.profile,"Harry","37","이해리 입니다"),
+        User(R.drawable.profile,"Mingki","32","강민경 입니다"),
+        User(R.drawable.profile,"V","27","My name is V of Victory"),
+        User(R.drawable.profile,"RM","28","Rap Monster")
+
+    )
     override fun onCreate(savedInstanceState: Bundle?) {
         //액티비티의 실행시작지점
         super.onCreate(savedInstanceState)
@@ -40,8 +51,18 @@ class MainActivity : AppCompatActivity() {
         /*
         모델 객체라는 것을 만들어야 함
         list에 뿌려줄 데이터들을 어떤 것ㅇ들을 사용할 것인지 지정해 주는 것
-
-
         */
+
+        val Adapter=UserAdapter(this,UserList)
+        //우리가 커스텀해서 만든 UserAdapter
+        binding.listView.adapter=Adapter
+        //xml의 listView라는 id를 갖는 listview에 adapter에 우리가 만든 UserAdapter를 연결!
+        //사실 listview는 끝 !
+
+        binding.listView.onItemClickListener = AdapterView.OnItemClickListener { parent, view, position, id ->
+            val selectItem = parent.getItemAtPosition(position) as User
+            //User라는 모델 단위로 position번째 item을 가져와
+            Toast.makeText(this,selectItem.name,Toast.LENGTH_SHORT).show()
+        }
     }
 }
