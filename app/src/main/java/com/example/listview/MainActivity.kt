@@ -60,6 +60,7 @@ class MainActivity : AppCompatActivity() {
         //사실 listview는 끝 !
 
         binding.listView.onItemClickListener = AdapterView.OnItemClickListener { parent, view, position, id ->
+            //parent는 상위 view를 나타낸다...?
             val selectItem = parent.getItemAtPosition(position) as User
             //User라는 모델 단위로 position번째 item을 가져와
             Toast.makeText(this,selectItem.name,Toast.LENGTH_SHORT).show()
